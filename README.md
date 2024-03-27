@@ -1,7 +1,5 @@
 # Beyond-All-Reason Tactics Mod
 
-![Discord](https://img.shields.io/discord/225695362004811776)
-
 A roundbased defence mod for the open source RTS game Beyond all Reason built on top of the Spring RTS Engine.
 Work in progress...
 
