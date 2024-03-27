@@ -1,8 +1,9 @@
-# Beyond-All-Reason
+# Beyond-All-Reason Tactics Mod
 
 ![Discord](https://img.shields.io/discord/225695362004811776)
 
-Open source RTS game built on top of the Spring RTS Engine
+A roundbased defence mod for the open source RTS game Beyond all Reason built on top of the Spring RTS Engine.
+Work in progress...
 
 ## Where to download
 
@@ -33,7 +34,7 @@ Once you have a working install of BAR you need a local development copy of the 
 3. In the BAR install directory in the `data` folder in the `games` sub-directory (create `games` if it doesn't exist) clone the code for this repository into a directory with a name ending in `.sdd`. For example:
 
 ```
-git clone https://github.com/beyond-all-reason/Beyond-All-Reason.git BAR.sdd
+git clone https://github.com/superdragonwolf/Beyond-All-Reason.git tactics.sdd
 ```
 Ensure that you have the correct path by looking for the file `Beyond-All-Reason/data/games/BAR.sdd/modinfo.lua`
 
