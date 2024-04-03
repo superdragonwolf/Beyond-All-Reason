@@ -10,9 +10,9 @@ function gadget:GetInfo()
     }
 end
 
-if true then
-    return -- kill it for now
-end
+--if true then
+--    return -- kill it for now
+--end
 
 if not gadgetHandler:IsSyncedCode() then
     return
@@ -52,15 +52,13 @@ end
 
 function gadget:GameFrame(frame)
     if frame == 1 then
-        for i = 1,100 do
-            if math.random(1,10) == 1 then -- April Fools odds
-            -- if math.random(1,5000) == 1 then -- Normal Day odds
+        for i = 1,10*#Spring.GetTeamList() do
+            if math.random(1,10000) == 1 then 
                 for j = 1,1000 do
                     local posx = math.random(math.floor(Game.mapSizeX*0.02), math.ceil(Game.mapSizeX*0.98))
-                    local posz = math.random(math.floor(Game.mapSizeX*0.02), math.ceil(Game.mapSizeX*0.98))
+                    local posz = math.random(math.floor(Game.mapSizeZ*0.02), math.ceil(Game.mapSizeZ*0.98))
                     local posy = Spring.GetGroundHeight(posx, posz)
                     local blockerDistance = getNearestBlocker(posx, posz)
-                    Spring.Echo(blockerDistance)
                     if posy > 0 and positionCheckLibrary.FlatAreaCheck(posx, posy, posz, 64, 25, true) and blockerDistance > 196 then
                         local boomboxID = Spring.CreateUnit("boombox", posx, posy, posz, "west", Spring.GetGaiaTeamID())
                         if boomboxID then
@@ -113,3 +111,11 @@ function gadget:AllowUnitTransfer(unitID, unitDefID, oldTeam, newTeam, capture)
         return true
     end
 end
+
+function gadget:UnitDestroyed(unitID, unitDefID)
+    if UnitDefs[unitDefID].name == "boombox" then
+        SelfDQueue[unitID] = nil
+        AliveBoomboxes[unitID] = nil
+    end
+end
+

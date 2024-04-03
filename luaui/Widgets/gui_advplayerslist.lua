@@ -1992,7 +1992,7 @@ function DrawLabelTip(text, vOffset, xOffset)
 end
 
 function DrawSeparator(vOffset)
-    vOffset = vOffset - (2.15/playerScale)
+    vOffset = vOffset - (3*playerScale)
     RectRound(
 		widgetPosX + 2,
 		widgetPosY + widgetHeight - vOffset - (1.5 / widgetScale),
@@ -3607,7 +3607,7 @@ function widget:Update(delta)
         local curMapDrawMode = Spring.GetMapDrawMode()
         Spring_SendCommands("specteam " .. player[clickedPlayerID].team)
         if lockPlayerID then
-            LockCamera(player[clickedPlayerID].ai and nil or i)
+            LockCamera(player[clickedPlayerID].ai and nil or clickedPlayerID)
         else
             if not fullView then
                 desiredLosmode = 'los'
