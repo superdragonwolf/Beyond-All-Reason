@@ -2,37 +2,34 @@ if not gadgetHandler:IsSyncedCode() then
 	return
 end
 
-local titans = {
-    {name = "armbanth", x = 12256, y = 47, z = 32, rot = 16384 , neutral = false, teamID = 2, queue = {
-    {cmdID = CMD.MOVE, position = {px = 32, py = 38, pz = 32}},
+-- west rot = 32767, 18785, 32287, 13024, 15314, 45314, 130240
+
+local wave = {
+    {name = "cordemon", x = 1533, y = 385, z = 4300, rot = 2, neutral = false, teamID = 0, queue = {
+    {cmdID = CMD.FIGHT, position = {px = 1533, py = 385, pz = 1479}},
     }},
-    {name = "armbanth", x = 12256, y = 47, z = 1032, rot = 16384 , neutral = false, teamID = 2, queue = {
-    {cmdID = CMD.MOVE, position = {px = 32, py = 38, pz = 1032}},
+    {name = "cordemon", x = 1733, y = 385, z = 4300, rot = 2, neutral = false, teamID = 0, queue = {
+    {cmdID = CMD.FIGHT, position = {px = 1733, py = 385, pz = 1479}},
     }},
 }
 
-local function Handicap() -- reads the player's handicap and stores the value
-    local PlayerRules = {Spring.GetTeamInfo(0)}
-    -- Spring.Echo(PlayerRules[7])
-    if PlayerRules[7] == 1.001 then
-        return 1
-    elseif PlayerRules[7] == 1.002 then
-        return 2
-    elseif PlayerRules[7] == 1.003 then
-        return 3
-    elseif PlayerRules[7] == 1.004 then
-        return 4
-    elseif PlayerRules[7] == 1.005 then
-        return 5
+local defender = {
+    {name = "cordemon", x = 1533, y = 385, z = 4400, rot = 2, neutral = false, teamID = 0},
+    {name = "cordemon", x = 1733, y = 385, z = 4400, rot = 2, neutral = false, teamID = 0},
+}
+
+local function SpawnDefender() -- spawns titans at one end of the map and commands them to move to the other end
+    for k , unit in pairs(defender) do
+        if UnitDefNames[unit.name] then
+            Spring.CreateUnit(unit.name, unit.x, unit.y, unit.z, unit.rot, unit.teamID)
+        end
     end
 end
 
-local handicap = Handicap()
-
-local function SpawnTitans() -- spawns titans at one end of the map and commands them to move to the other end
-    for k , unit in pairs(titans) do
+local function SpawnWave() -- spawns titans at one end of the map and commands them to move to the other end
+    for k , unit in pairs(wave) do
         if UnitDefNames[unit.name] then
-        local unitID = Spring.CreateUnit(unit.name, unit.x, unit.y, unit.z, unit.rot, unit.teamID)
+            local unitID = Spring.CreateUnit(unit.name, unit.x, unit.y, unit.z, unit.rot, unit.teamID)
             for i = 1, #unit.queue do
                     local order = unit.queue[i]
                     local position = {order.position["px"], order.position["py"], order.position["pz"]}
@@ -44,10 +41,14 @@ end
 
 function gadget:GameFrame(frameNum) --fires off every frame
     local n = frameNum
-        if n < 1 then
-            SpawnTitans()
+        if n == 10 then
+            SpawnDefender()
+            SpawnWave()
         end
-        if n > 0 and n % 2700 == 0 then 
-            SpawnTitans()
+        if n == 1800 then -- 1min 
+            SpawnWave()
+        end
+        if n == 3600 then -- 2min 
+            SpawnWave()
         end
 end
